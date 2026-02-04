@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GODMYHXND | LOCAL MUSIC</title>
+    <style>
+        /* หน้าจอเข้าเว็บ */
+        #enter-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; display: flex; justify-content: center; align-items: center;
+            z-index: 10000; cursor: pointer; font-family: 'Courier New', monospace;
+        }
+        #enter-text { color: #fff; letter-spacing: 5px; animation: blink 1.5s infinite; text-align: center; }
+        @keyframes blink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+
+        body { background-color: #000; color: #fff; font-family: 'Courier New', monospace; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; flex-direction: column; overflow: hidden; }
+        .container { width: 90%; max-width: 500px; text-align: center; }
+        .logo-box img { width: 150px; opacity: 0.8; margin: 20px 0; }
+        .nav-menu { display: flex; flex-direction: column; gap: 10px; }
+        .nav-btn { display: block; text-decoration: none; color: #fff; border: 1px solid #333; padding: 15px; transition: 0.3s; }
+        .nav-btn:hover { border-color: #fff; background: rgba(255,255,255,0.1); letter-spacing: 2px; }
+
+        /* Music Player UI */
+        #music-player { position: fixed; bottom: 20px; left: 20px; background: rgba(0, 0, 0, 0.9); border: 1px solid #333; padding: 10px 15px; display: flex; align-items: center; gap: 15px; z-index: 9999; }
+        .music-info { text-align: left; }
+        #music-status { font-size: 10px; color: #555; display: block; }
+        .track-name { font-size: 12px; color: #fff; }
+        #music-btn { background: transparent; border: 1px solid #fff; color: #fff; padding: 5px 10px; cursor: pointer; font-family: 'Courier New'; }
+        .playing #music-status { color: #00ff00 !important; text-shadow: 0 0 5px #00ff00; }
+    </style>
+</head>
+<body>
+
+    <div id="enter-overlay" onclick="startSystem()">
+        <div id="enter-text">
+            [ GODMYHXND ARCHIVE ]<br>
+            <span style="font-size: 12px; letter-spacing: 2px;">CLICK TO ACCESS & ENABLE AUDIO</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>House of GODMYHXND</h1>
+        <div class="logo-box">
+            <img src="https://img2.pic.in.th/image-removebg-preview-11702e540026f771a.png" alt="Logo">
+        </div>
+        <div class="nav-menu">
+            <a href="founder.html" class="nav-btn">FOUNDER LIST</a>
+            <a href="leader.html" class="nav-btn">LEADER LIST</a>
+            <a href="member.html" class="nav-btn">MEMBER LIST</a>
+        </div>
+    </div>
+
+    <div id="music-player">
+        <div class="music-info">
+            <span id="music-status">OFFLINE</span>
+            <div class="track-name" id="display-track-name">MY-MUSIC.mp3</div>
+        </div>
+        <button onclick="toggleMusic()" id="music-btn">PLAY</button>
+    </div>
+
+    <audio id="myAudio" loop>
+        <source src="HAWKCRY - Godhand Champ Fivem ftJUNGJI  HIGHJACK Prodby SINATO (1).mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const audio = document.getElementById("myAudio");
+        const btn = document.getElementById("music-btn");
+        const status = document.getElementById("music-status");
+        const playerDiv = document.getElementById("music-player");
+        const overlay = document.getElementById("enter-overlay");
+
+        function startSystem() {
+            overlay.style.display = "none";
+            audio.play().catch(function(error) {
+                console.log("Autoplay บล็อก: ", error);
+            });
+            updateUI(true);
+        }
+
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                updateUI(true);
+            } else {
+                audio.pause();
+                updateUI(false);
+            }
+        }
+
+        function updateUI(playing) {
+            btn.innerText = playing ? "STOP" : "PLAY";
+            status.innerText = playing ? "ONLINE" : "OFFLINE";
+            playing ? playerDiv.classList.add("playing") : playerDiv.classList.remove("playing");
+        }
+    </script>
+</body>
+</html>

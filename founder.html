@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOUNDER LIST | GODMYHXND</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            /* ใส่ URL รูปพื้นหลังในเครื่องหรือลิงก์รูปได้ที่นี่ */
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden; /* ป้องกันหน้าจอเลื่อนซ้ายขวาจากหิมะ */
+        }
+
+        /* --- โค้ดส่วนหิมะตก (Snow Animation) --- */
+        .snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* เพื่อให้ยังกดปุ่มต่างๆ ได้ */
+            z-index: 1; /* ให้อยู่เหนือพื้นหลังแต่อยู่ใต้ตัวอักษรบางส่วน */
+        }
+
+        .snowflake {
+            color: #fff;
+            font-size: 1em;
+            font-family: Arial, sans-serif;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+            position: fixed;
+            top: -10%;
+            z-index: 1;
+            user-select: none;
+            cursor: default;
+            animation: snowfall linear infinite;
+        }
+
+        /* สร้างการเคลื่อนไหวแบบสุ่ม */
+        @keyframes snowfall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0.3; }
+        }
+
+        /* กำหนดตำแหน่งและความเร็วหิมะแต่ละเม็ด */
+        .snowflake:nth-child(1) { left: 10%; animation-duration: 10s; animation-delay: 0s; }
+        .snowflake:nth-child(2) { left: 20%; animation-duration: 12s; animation-delay: 1s; }
+        .snowflake:nth-child(3) { left: 30%; animation-duration: 8s; animation-delay: 2s; }
+        .snowflake:nth-child(4) { left: 40%; animation-duration: 15s; animation-delay: 0s; }
+        .snowflake:nth-child(5) { left: 50%; animation-duration: 11s; animation-delay: 3s; }
+        .snowflake:nth-child(6) { left: 60%; animation-duration: 13s; animation-delay: 2s; }
+        .snowflake:nth-child(7) { left: 70%; animation-duration: 9s; animation-delay: 1s; }
+        .snowflake:nth-child(8) { left: 80%; animation-duration: 14s; animation-delay: 0s; }
+        .snowflake:nth-child(9) { left: 90%; animation-duration: 10s; animation-delay: 4s; }
+        .snowflake:nth-child(10) { left: 25%; animation-duration: 11s; animation-delay: 2s; }
+
+        /* --- จบส่วนหิมะตก --- */
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+            position: relative;
+            z-index: 2; /* ให้เนื้อหาอยู่บนหิมะ */
+        }
+
+        .header {   
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            margin: 0;
+            font-weight: 800;
+        }
+
+        .header h1 span {
+            color: #e2513e;
+        }
+
+        .sub-header {
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #ccc;
+            text-transform: uppercase;
+        }
+
+        .member-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: rgba(10, 10, 10, 0.9);
+            border-left: 5px solid #ececec;
+            display: flex;
+            padding: 25px;
+            align-items: center;
+            transition: 0.3s ease;
+            border-top: 1px solid #222;
+            border-right: 1px solid #222;
+            border-bottom: 1px solid #222;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            background: rgba(30, 30, 30, 0.95);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2);
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            background: #1a1a1a;
+            margin-right: 20px;
+            border: 1px solid #333;
+            flex-shrink: 0;
+        }
+
+        .info h3 {
+            margin: 0;
+            font-size: 18px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .info p {
+            margin: 5px 0;
+            color: #888;
+            font-size: 12px;
+        }
+
+        .view-profile {
+            display: inline-block;
+            margin-top: 10px;
+            color: #4a90e2;
+            text-decoration: none;
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            text-decoration: none;
+            border: 1px solid #444;
+            font-size: 12px;
+            z-index: 1000;
+        }
+        
+        .back-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* ช่วยให้รูปไม่เบี้ยว แม้ขนาดรูปจริงจะไม่เป็นสี่เหลี่ยมจัตุรัส */
+            display: block;
+      } 
+    </style>
+</head>
+<body>
+
+    <div class="snowflakes" aria-hidden="true">
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+    </div>
+
+    <a href="index.html" class="back-btn">BACK</a>
+
+    <div class="container">
+        <div class="header">
+            <h1><span>FOUNDER</span> LIST</h1>
+            <p class="sub-header">ACCESSING GODMYHXND NEVERBROKE</p>
+        </div>
+
+        <div class="member-grid">
+            
+            <div class="card">
+                 <div class="avatar">
+           <img src="https://img2.pic.in.th/image-removebg-preview-11702e540026f771a.png" alt="Profile">
+    </div>
+       <div class="info">
+          <h3>Monalisa Winterfell</h3>
+             <p>FOUNDER</p>
+            <a href="https://www.facebook.com/monxlisa168" target="_blank" class="view-profile">● VIEW PROFILE</a>
+        </div>
+   </div>
+
+    <div class="card">
+        <div class="avatar">
+          <img src="https://img2.pic.in.th/image-removebg-preview-11702e540026f771a.png" alt="Profile">
+           </div>
+          <div class="info">
+           <h3>Bungbom Winterfell delta</h3>
+             <p>FOUNDER</p>
+        <a href="https://www.facebook.com/monxlisa168" target="_blank" class="view-profile">● VIEW PROFILE</a>
+       </div>
+    </div>
+
+</body>
+</html>

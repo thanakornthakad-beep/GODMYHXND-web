@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEMBER LIST | GODMYHXND</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* เอฟเฟกต์หิมะ */
+        .snowflakes { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .snowflake { color: #fff; position: fixed; top: -10%; z-index: 1; animation: snowfall linear infinite; }
+        @keyframes snowfall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(110vh) rotate(360deg); opacity: 0.3; } }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 50px 20px; position: relative; z-index: 2; }
+
+        /* หัวข้อและแถบค้นหา */
+        .header-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header h1 { font-size: 48px; margin: 0; font-weight: 800; text-transform: uppercase; }
+        .header h1 span { color: #fff127; }
+        .sub-header { font-size: 12px; letter-spacing: 2px; color: #ccc; }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .search-box input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #444;
+            padding: 10px 15px;
+            color: #fff;
+            width: 250px;
+            outline: none;
+        }
+
+        /* Grid แถวละ 3 */
+        .member-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* บังคับแถวละ 3 */
+            gap: 20px;
+        }
+
+        @media (max-width: 992px) { .member-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .member-grid { grid-template-columns: 1fr; } }
+
+        .card {
+            background: rgba(15, 15, 15, 0.95);
+            border-left: 5px solid #fff127;
+            display: flex;
+            padding: 20px;
+            align-items: center;
+            border: 1px solid #222;
+            border-left: 5px solid #fff127;
+            transition: 0.3s;
+        }
+
+        .card:hover { transform: translateY(-5px); background: #1a1a1a; box-shadow: 0 5px 15px rgba(255, 241, 39, 0.1); }
+
+        .avatar { width: 70px; height: 70px; background: #000; margin-right: 15px; flex-shrink: 0; overflow: hidden; border: 1px solid #333; }
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        .info h3 { margin: 0; font-size: 16px; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .info p { margin: 3px 0; color: #888; font-size: 11px; }
+        .view-profile { display: inline-block; margin-top: 8px; color: #4a90e2; text-decoration: none; font-size: 10px; font-weight: bold; }
+
+        /* Pagination ปุ่มเปลี่ยนหน้า */
+        .pagination {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .page-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #444;
+            color: #fff;
+            padding: 8px 20px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 12px;
+            transition: 0.3s;
+        }
+
+        .page-btn:hover:not(:disabled) { background: #fff; color: #000; }
+        .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+        .back-btn { position: fixed; top: 20px; right: 20px; padding: 8px 15px; background: rgba(255,255,255,0.1); color: #fff; text-decoration: none; border: 1px solid #444; font-size: 12px; z-index: 1000; }
+    </style>
+</head>
+<body>
+
+    <div class="snowflakes" aria-hidden="true">
+        <div class="snowflake" style="left:10%; animation-duration:10s;">❅</div>
+        <div class="snowflake" style="left:30%; animation-duration:12s;">❆</div>
+        <div class="snowflake" style="left:50%; animation-duration:8s;">❅</div>
+        <div class="snowflake" style="left:70%; animation-duration:15s;">❆</div>
+        <div class="snowflake" style="left:90%; animation-duration:11s;">❅</div>
+    </div>
+
+    <a href="index.html" class="back-btn">BACK</a>
+
+    <div class="container">
+        <div class="header-wrapper">
+            <div class="header">
+                <h1><span>MEMBER</span> LIST</h1>
+                <p class="sub-header">ACCESSING GODMYHXND DATABASE // MEMBER ARCHIVE</p>
+            </div>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="ค้นหารายชื่อสมาชิก...">
+            </div>
+        </div>
+
+        <div class="member-grid" id="memberGrid">
+            </div>
+
+        <div class="pagination">
+            <button class="page-btn" id="prevBtn">ก่อนหน้า</button>
+            <span id="pageInfo">หน้า 1 / 1</span>
+            <button class="page-btn" id="nextBtn">ถัดไป</button>
+        </div>
+    </div>
+
+    <script>
+        // 1. ข้อมูลสมาชิก (เพิ่มรายชื่อตรงนี้ได้เลย)
+        const allMembers = [
+            { name: "Member", role: "MEMBER", img: "https://img2.pic.in.th/image-removebg-preview-11702e540026f771a.png", fb: "#" },
+            { name: "Member", role: "MEMBER", img: "https://img2.pic.in.th/image-removebg-preview-11702e540026f771a.png", fb: "#" },
+            { name: "Member", role: "MEMBER", img: "https://img2.pic.in.th/image-removebg-preview-11702e540026f771a.png", fb: "#" },
+            { name: "Member", role: "MEMBER", img: "https://img2.pic.in.th/image-removebg-preview-11702e540026f771a.png", fb: "#" },
+            { name: "Member", role: "MEMBER", img: "https://via.placeholder.com/80", fb: "#" },
+            { name: "Member", role: "MEMBER", img: "https://via.placeholder.com/80", fb: "#" },
+            { name: "Member", role: "MEMBER", img: "https://via.placeholder.com/80", fb: "#" },
+            { name: "Member", role: "MEMBER", img: "https://via.placeholder.com/80", fb: "#" },
+            { name: "Member", role: "MEMBER", img: "https://via.placeholder.com/80", fb: "#" },
+            { name: "Member", role: "MEMBER", img: "https://via.placeholder.com/80", fb: "#" },
+            { name: "Member", role: "MEMBER", img: "https://via.placeholder.com/80", fb: "#" },
+            { name: "Member", role: "MEMBER", img: "https://via.placeholder.com/80", fb: "#" },
+            // เพิ่มคนที่ 13 เพื่อทดสอบระบบหน้าถัดไป
+            { name: "TEST MEMBER 13", role: "MEMBER", img: "", fb: "#" },
+        ];
+
+        let filteredMembers = [...allMembers];
+        let currentPage = 1;
+        const membersPerPage = 12;
+
+        const grid = document.getElementById('memberGrid');
+        const searchInput = document.getElementById('searchInput');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const pageInfo = document.getElementById('pageInfo');
+
+        function renderMembers() {
+            grid.innerHTML = "";
+            const start = (currentPage - 1) * membersPerPage;
+            const end = start + membersPerPage;
+            const paginatedItems = filteredMembers.slice(start, end);
+
+            paginatedItems.forEach(m => {
+                grid.innerHTML += `
+                    <div class="card">
+                        <div class="avatar"><img src="${m.img}" alt=""></div>
+                        <div class="info">
+                            <h3>${m.name}</h3>
+                            <p>${m.role}</p>
+                            <a href="${m.fb}" target="_blank" class="view-profile">● VIEW PROFILE</a>
+                        </div>
+                    </div>
+                `;
+            });
+
+            updatePagination();
+        }
+
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredMembers.length / membersPerPage) || 1;
+            pageInfo.innerText = `หน้า ${currentPage} / ${totalPages}`;
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages;
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            filteredMembers = allMembers.filter(m => m.name.toLowerCase().includes(term));
+            currentPage = 1;
+            renderMembers();
+        });
+
+        prevBtn.addEventListener('click', () => { if(currentPage > 1) { currentPage--; renderMembers(); } });
+        nextBtn.addEventListener('click', () => { 
+            const totalPages = Math.ceil(filteredMembers.length / membersPerPage);
+            if(currentPage < totalPages) { currentPage++; renderMembers(); } 
+        });
+
+        renderMembers();
+    </script>
+</body>
+</html>
